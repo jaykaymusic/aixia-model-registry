@@ -2,7 +2,7 @@
   "_schema_version": 1,
   "_description": "Shared model registry for all AIXIA-workspace projects. Projects resolve model family → current_version at runtime from this file. Maintained by the bi-weekly model-release crawler (scheduled trigger). See ~/.claude/CLAUDE.md §9.5 for policy.",
   "_last_updated": "2026-04-20",
-  "_last_crawler_run": null,
+  "_last_crawler_run": "2026-04-20T16:00:00Z",
   "_next_scheduled_run": "2026-05-04",
   "_bootstrap_note": "This is the bootstrap state from 2026-04-20. Entries marked bootstrap_unverified: true are seeded from CLAUDE Code context and should be verified on the first crawler run. Pricing drifts; registry values are authoritative — always re-read at call-time.",
 
@@ -12,12 +12,12 @@
       "current_version": "claude-opus-4-7",
       "release_date": "2026-01-01",
       "context_window": 1000000,
-      "pricing_per_million_usd": { "input": 15.00, "output": 75.00 },
+      "pricing_per_million_usd": { "input": 5.00, "output": 25.00 },
       "capabilities": ["reasoning", "tool_use", "long_context", "prompt_caching"],
       "default_use": "swarm_disputes_and_corpus_qa",
       "last_verified": "2026-04-20",
       "bootstrap_unverified": false,
-      "notes": "Confirmed from Claude Code session context. 1M-context variant available."
+      "notes": "Pricing corrected from bootstrap ($15/$75 → $5/$25); bootstrap value reflected older Opus 3 pricing. $5/$25 confirmed via multiple April 2026 sources. Note: Claude Mythos confirmed April 7 2026 but withheld under Project Glasswing (50-org restricted access) — not yet API-available."
     },
     "claude_sonnet": {
       "vendor": "anthropic",
@@ -29,7 +29,7 @@
       "default_use": "user_facing_chat_and_chain_synthesis",
       "last_verified": "2026-04-20",
       "bootstrap_unverified": false,
-      "notes": "Confirmed from Claude Code session context."
+      "notes": "Pricing and version verified April 2026. No change from bootstrap."
     },
     "claude_haiku": {
       "vendor": "anthropic",
@@ -41,19 +41,19 @@
       "default_use": "cross_lingual_parsing_and_fallback",
       "last_verified": "2026-04-20",
       "bootstrap_unverified": false,
-      "notes": "Confirmed from Claude Code session context."
+      "notes": "Pricing and version verified April 2026. No change from bootstrap."
     },
     "deepseek_general": {
       "vendor": "deepseek",
-      "current_version": "deepseek-v3",
-      "release_date": "2025-12-26",
+      "current_version": "deepseek-v3.2",
+      "release_date": "2025-09-29",
       "context_window": 128000,
-      "pricing_per_million_usd": { "input": 0.27, "output": 1.10 },
-      "capabilities": ["classification", "fuzzy_match", "multilingual_basic"],
+      "pricing_per_million_usd": { "input": 0.28, "output": 0.42 },
+      "capabilities": ["classification", "fuzzy_match", "multilingual_basic", "reasoning"],
       "default_use": "routine_llm_traffic",
       "last_verified": "2026-04-20",
-      "bootstrap_unverified": true,
-      "notes": "Pricing from industry reporting; crawler first-run should verify. Chinese-server jurisdiction — disclose in ToS. Router fallback: deepseek → claude_haiku → claude_sonnet."
+      "bootstrap_unverified": false,
+      "notes": "Updated v3 → v3.2 (V3.2-Exp released Sept 29 2025; V3.2 Speciale Dec 2025 at $0.40/$1.20). Output pricing dropped vs bootstrap ($1.10 → $0.42). Features 685B params and Thinking-in-Tool-Use. Cache hits: $0.028/M input. Chinese-server jurisdiction — disclose in ToS. Router fallback: deepseek → claude_haiku → claude_sonnet."
     },
     "deepseek_reasoning": {
       "vendor": "deepseek",
@@ -64,92 +64,104 @@
       "capabilities": ["reasoning", "long_cot"],
       "default_use": "reasoning_when_opus_too_expensive",
       "last_verified": "2026-04-20",
-      "bootstrap_unverified": true,
-      "notes": "Reasoning-specialized variant. Cheaper alternative to Claude Opus for non-critical reasoning tasks."
+      "bootstrap_unverified": false,
+      "notes": "Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). DeepSeek-R2 (1.2T-param MoE) anticipated but not yet released as of April 2026. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks."
     },
     "gemini_pro_multimodal": {
       "vendor": "google",
       "current_version": "gemini-3.1-pro",
       "release_date": "2026-01-15",
       "context_window": 2000000,
-      "pricing_per_million_usd": { "input": 1.25, "output": 5.00 },
+      "pricing_per_million_usd": { "input": 2.00, "output": 12.00 },
       "capabilities": ["multimodal", "vision", "audio", "video", "youtube_url_ingest"],
       "default_use": "audio_video_verification_and_youtube_analysis",
       "last_verified": "2026-04-20",
-      "bootstrap_unverified": true,
-      "notes": "Referenced in AIXIA workspace CLAUDE.md. Handles YouTube URL ingest directly via file_data.file_uri. Pricing estimated — crawler should verify."
+      "bootstrap_unverified": false,
+      "notes": "Pricing corrected from bootstrap estimate ($1.25/$5.00 → $2.00/$12.00). Tiered pricing: $2/$12 up to 200K tokens; $4/$18 above 200K. Scored 77.1% on ARC-AGI-2 (2× Gemini 3 Pro). Handles YouTube URL ingest via file_data.file_uri."
     },
     "gemini_flash": {
       "vendor": "google",
       "current_version": "gemini-3.1-flash",
       "release_date": "2026-01-15",
       "context_window": 1000000,
-      "pricing_per_million_usd": { "input": 0.10, "output": 0.40 },
+      "pricing_per_million_usd": { "input": 0.50, "output": 3.00 },
       "capabilities": ["multimodal", "fast"],
       "default_use": "bulk_text_processing",
       "last_verified": "2026-04-20",
-      "bootstrap_unverified": true,
-      "notes": "Fast variant. Pricing estimated."
+      "bootstrap_unverified": false,
+      "notes": "Pricing corrected from bootstrap estimate ($0.10/$0.40 → $0.50/$3.00). Budget alternative: gemini-3.1-flash-lite at $0.25/$1.50 for cheapest bulk tasks. Also note: Gemma 4 31B released April 2 2026 (Apache 2.0, #3 on Arena AI) as open-weight Google-arch inference option."
     },
     "openai_gpt": {
       "vendor": "openai",
-      "current_version": "UNKNOWN_BOOTSTRAP",
-      "release_date": null,
-      "context_window": null,
-      "pricing_per_million_usd": { "input": null, "output": null },
-      "capabilities": [],
+      "current_version": "gpt-5.4",
+      "release_date": "2026-03-05",
+      "context_window": 1050000,
+      "pricing_per_million_usd": { "input": 2.50, "output": 15.00 },
+      "capabilities": ["reasoning", "tool_use", "multimodal", "vision"],
       "default_use": "fallback_only",
-      "last_verified": null,
-      "bootstrap_unverified": true,
-      "notes": "Not currently used by any AIXIA-workspace project. First crawler run should populate current GPT-5 family state if needed."
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "First verified entry. GPT-5.4 launched Mar 5 2026; 33% fewer claim errors vs GPT-5.2. Standard $2.50/$15 covers up to 272K context; above 272K: 2× input, 1.5× output. Also: gpt-5.4-mini ($0.75/$4.50, 400K, Mar 17 2026); gpt-5.4-pro ($30/$180). Not currently used by AIXIA projects."
     },
     "openai_reasoning": {
       "vendor": "openai",
-      "current_version": "UNKNOWN_BOOTSTRAP",
-      "release_date": null,
-      "context_window": null,
-      "pricing_per_million_usd": { "input": null, "output": null },
-      "capabilities": ["reasoning"],
+      "current_version": "o4-mini",
+      "release_date": "2026-02-01",
+      "context_window": 200000,
+      "pricing_per_million_usd": { "input": 1.10, "output": 4.40 },
+      "capabilities": ["reasoning", "long_cot", "tool_use"],
       "default_use": "unused",
-      "last_verified": null,
-      "bootstrap_unverified": true,
-      "notes": "o-series reasoning models. Crawler to populate."
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "First verified entry. o4-mini is newest OpenAI reasoning model; outperforms o3-mini at ~50% lower cost. o3 also available ($2.00/M input, 200K context). IMPORTANT: reasoning tokens billed at output rate — effective cost 5–20× listed rate depending on task complexity. Release date approximate (early 2026). Not currently used by AIXIA projects."
     },
     "mistral_large": {
       "vendor": "mistral",
-      "current_version": "UNKNOWN_BOOTSTRAP",
-      "release_date": null,
-      "context_window": null,
-      "pricing_per_million_usd": { "input": null, "output": null },
-      "capabilities": [],
+      "current_version": "mistral-large-3-2512",
+      "release_date": "2025-12-01",
+      "context_window": 262000,
+      "pricing_per_million_usd": { "input": 0.50, "output": 1.50 },
+      "capabilities": ["reasoning", "tool_use", "multilingual", "eu_data_residency"],
       "default_use": "eu_data_residency_fallback",
-      "last_verified": null,
-      "bootstrap_unverified": true,
-      "notes": "EU-hosted option. Potential alternative for data-residency-sensitive tiers."
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "First verified entry. Mistral Large 3 2512 released December 1 2025; 262K context. EU-hosted option for data-residency-sensitive tiers. See also mistral_small entry for cheaper multimodal EU option."
+    },
+    "mistral_small": {
+      "vendor": "mistral",
+      "current_version": "mistral-small-2603",
+      "release_date": "2026-03-17",
+      "context_window": 256000,
+      "pricing_per_million_usd": { "input": 0.15, "output": 0.60 },
+      "capabilities": ["reasoning", "multimodal", "vision", "tool_use", "eu_data_residency"],
+      "default_use": "cheap_eu_multimodal_option",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "NEW ENTRY — added first crawler run. Mistral Small 4 (mistral-small-2603): MoE 119B total / 6B active params, 256K context, native multimodal (text + image). Announced NVIDIA GTC March 17 2026. Cheapest EU-residency multimodal option in registry at $0.15/$0.60."
     },
     "llama": {
       "vendor": "meta",
-      "current_version": "UNKNOWN_BOOTSTRAP",
-      "release_date": null,
-      "context_window": null,
-      "pricing_per_million_usd": { "input": null, "output": null },
-      "capabilities": ["open_weights"],
+      "current_version": "llama-4-maverick",
+      "release_date": "2025-04-05",
+      "context_window": 1000000,
+      "pricing_per_million_usd": { "input": 0.15, "output": 0.60 },
+      "capabilities": ["open_weights", "multimodal", "vision", "tool_use"],
       "default_use": "self_hosted_option",
-      "last_verified": null,
-      "bootstrap_unverified": true,
-      "notes": "Open-weight family. For self-hosted inference if desired."
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "First verified entry. Llama 4 Maverick: 17B active params, 128 experts (400B total), 1M context, natively multimodal MoE. API pricing reflects third-party providers. Also: Llama 4 Scout (same price, 10M context, 16 experts, 109B total) for extreme-context self-hosted tasks. Both Apache 2.0 open-weight."
     },
     "grok": {
       "vendor": "xai",
-      "current_version": "UNKNOWN_BOOTSTRAP",
-      "release_date": null,
-      "context_window": null,
-      "pricing_per_million_usd": { "input": null, "output": null },
-      "capabilities": [],
-      "default_use": "unused",
-      "last_verified": null,
-      "bootstrap_unverified": true,
-      "notes": "Crawler to populate."
+      "current_version": "grok-4.20-0309-v2",
+      "release_date": "2026-04-07",
+      "context_window": 2000000,
+      "pricing_per_million_usd": { "input": 2.00, "output": 6.00 },
+      "capabilities": ["reasoning", "tool_use", "multimodal", "vision"],
+      "default_use": "reasoning_and_multimodal_alternative",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "First verified entry. Grok 4.20 (Apr 7 2026): four-agent architecture, 2M context window, reasoning-optimized variant. Scores 49 on Artificial Analysis Intelligence Index. Grok 4.3 also referenced in April 2026 sources — may be incremental update; pricing/specs unconfirmed."
     }
   },
 
