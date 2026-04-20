@@ -1,0 +1,176 @@
+{
+  "_schema_version": 1,
+  "_description": "Shared model registry for all AIXIA-workspace projects. Projects resolve model family → current_version at runtime from this file. Maintained by the bi-weekly model-release crawler (scheduled trigger). See ~/.claude/CLAUDE.md §9.5 for policy.",
+  "_last_updated": "2026-04-20",
+  "_last_crawler_run": null,
+  "_next_scheduled_run": "2026-05-04",
+  "_bootstrap_note": "This is the bootstrap state from 2026-04-20. Entries marked bootstrap_unverified: true are seeded from CLAUDE Code context and should be verified on the first crawler run. Pricing drifts; registry values are authoritative — always re-read at call-time.",
+
+  "families": {
+    "claude_opus": {
+      "vendor": "anthropic",
+      "current_version": "claude-opus-4-7",
+      "release_date": "2026-01-01",
+      "context_window": 1000000,
+      "pricing_per_million_usd": { "input": 15.00, "output": 75.00 },
+      "capabilities": ["reasoning", "tool_use", "long_context", "prompt_caching"],
+      "default_use": "swarm_disputes_and_corpus_qa",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "Confirmed from Claude Code session context. 1M-context variant available."
+    },
+    "claude_sonnet": {
+      "vendor": "anthropic",
+      "current_version": "claude-sonnet-4-6",
+      "release_date": "2025-11-01",
+      "context_window": 200000,
+      "pricing_per_million_usd": { "input": 3.00, "output": 15.00 },
+      "capabilities": ["reasoning", "tool_use", "prompt_caching"],
+      "default_use": "user_facing_chat_and_chain_synthesis",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "Confirmed from Claude Code session context."
+    },
+    "claude_haiku": {
+      "vendor": "anthropic",
+      "current_version": "claude-haiku-4-5-20251001",
+      "release_date": "2025-10-01",
+      "context_window": 200000,
+      "pricing_per_million_usd": { "input": 1.00, "output": 5.00 },
+      "capabilities": ["classification", "fuzzy_match", "tool_use", "prompt_caching"],
+      "default_use": "cross_lingual_parsing_and_fallback",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": false,
+      "notes": "Confirmed from Claude Code session context."
+    },
+    "deepseek_general": {
+      "vendor": "deepseek",
+      "current_version": "deepseek-v3",
+      "release_date": "2025-12-26",
+      "context_window": 128000,
+      "pricing_per_million_usd": { "input": 0.27, "output": 1.10 },
+      "capabilities": ["classification", "fuzzy_match", "multilingual_basic"],
+      "default_use": "routine_llm_traffic",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": true,
+      "notes": "Pricing from industry reporting; crawler first-run should verify. Chinese-server jurisdiction — disclose in ToS. Router fallback: deepseek → claude_haiku → claude_sonnet."
+    },
+    "deepseek_reasoning": {
+      "vendor": "deepseek",
+      "current_version": "deepseek-r1",
+      "release_date": "2025-01-20",
+      "context_window": 64000,
+      "pricing_per_million_usd": { "input": 0.55, "output": 2.19 },
+      "capabilities": ["reasoning", "long_cot"],
+      "default_use": "reasoning_when_opus_too_expensive",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": true,
+      "notes": "Reasoning-specialized variant. Cheaper alternative to Claude Opus for non-critical reasoning tasks."
+    },
+    "gemini_pro_multimodal": {
+      "vendor": "google",
+      "current_version": "gemini-3.1-pro",
+      "release_date": "2026-01-15",
+      "context_window": 2000000,
+      "pricing_per_million_usd": { "input": 1.25, "output": 5.00 },
+      "capabilities": ["multimodal", "vision", "audio", "video", "youtube_url_ingest"],
+      "default_use": "audio_video_verification_and_youtube_analysis",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": true,
+      "notes": "Referenced in AIXIA workspace CLAUDE.md. Handles YouTube URL ingest directly via file_data.file_uri. Pricing estimated — crawler should verify."
+    },
+    "gemini_flash": {
+      "vendor": "google",
+      "current_version": "gemini-3.1-flash",
+      "release_date": "2026-01-15",
+      "context_window": 1000000,
+      "pricing_per_million_usd": { "input": 0.10, "output": 0.40 },
+      "capabilities": ["multimodal", "fast"],
+      "default_use": "bulk_text_processing",
+      "last_verified": "2026-04-20",
+      "bootstrap_unverified": true,
+      "notes": "Fast variant. Pricing estimated."
+    },
+    "openai_gpt": {
+      "vendor": "openai",
+      "current_version": "UNKNOWN_BOOTSTRAP",
+      "release_date": null,
+      "context_window": null,
+      "pricing_per_million_usd": { "input": null, "output": null },
+      "capabilities": [],
+      "default_use": "fallback_only",
+      "last_verified": null,
+      "bootstrap_unverified": true,
+      "notes": "Not currently used by any AIXIA-workspace project. First crawler run should populate current GPT-5 family state if needed."
+    },
+    "openai_reasoning": {
+      "vendor": "openai",
+      "current_version": "UNKNOWN_BOOTSTRAP",
+      "release_date": null,
+      "context_window": null,
+      "pricing_per_million_usd": { "input": null, "output": null },
+      "capabilities": ["reasoning"],
+      "default_use": "unused",
+      "last_verified": null,
+      "bootstrap_unverified": true,
+      "notes": "o-series reasoning models. Crawler to populate."
+    },
+    "mistral_large": {
+      "vendor": "mistral",
+      "current_version": "UNKNOWN_BOOTSTRAP",
+      "release_date": null,
+      "context_window": null,
+      "pricing_per_million_usd": { "input": null, "output": null },
+      "capabilities": [],
+      "default_use": "eu_data_residency_fallback",
+      "last_verified": null,
+      "bootstrap_unverified": true,
+      "notes": "EU-hosted option. Potential alternative for data-residency-sensitive tiers."
+    },
+    "llama": {
+      "vendor": "meta",
+      "current_version": "UNKNOWN_BOOTSTRAP",
+      "release_date": null,
+      "context_window": null,
+      "pricing_per_million_usd": { "input": null, "output": null },
+      "capabilities": ["open_weights"],
+      "default_use": "self_hosted_option",
+      "last_verified": null,
+      "bootstrap_unverified": true,
+      "notes": "Open-weight family. For self-hosted inference if desired."
+    },
+    "grok": {
+      "vendor": "xai",
+      "current_version": "UNKNOWN_BOOTSTRAP",
+      "release_date": null,
+      "context_window": null,
+      "pricing_per_million_usd": { "input": null, "output": null },
+      "capabilities": [],
+      "default_use": "unused",
+      "last_verified": null,
+      "bootstrap_unverified": true,
+      "notes": "Crawler to populate."
+    }
+  },
+
+  "routing_defaults": {
+    "description": "Canonical default routing for common task categories. Projects override as needed in their local CLAUDE.md.",
+    "classification_and_fuzzy_match": "deepseek_general",
+    "cross_lingual_parsing": "claude_haiku",
+    "user_facing_chat": "claude_sonnet",
+    "high_stakes_synthesis": "claude_sonnet",
+    "swarm_debates_and_qa": "claude_opus",
+    "reasoning_cost_sensitive": "deepseek_reasoning",
+    "audio_video_verification": "gemini_pro_multimodal",
+    "bulk_text_processing": "gemini_flash"
+  },
+
+  "fallback_chain": ["deepseek_general", "claude_haiku", "claude_sonnet"],
+
+  "privacy_mode_routing": {
+    "description": "When a project/tier enables Privacy Mode, all calls route through Claude only (no DeepSeek, no third-party-jurisdiction routes). Studio-tier Echoform users default to Privacy Mode.",
+    "classification_and_fuzzy_match": "claude_haiku",
+    "user_facing_chat": "claude_sonnet",
+    "swarm_debates_and_qa": "claude_opus"
+  }
+}
