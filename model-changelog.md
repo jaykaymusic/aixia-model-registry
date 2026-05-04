@@ -32,3 +32,19 @@ Append-only change log for `model-registry.json`. Maintained by the bi-weekly mo
 - **No changes for:** claude_sonnet, claude_haiku (pricing and versions stable).
 
 **Summary:** First bi-weekly crawler run populated 9 previously UNKNOWN families and corrected pricing on 3 entries. The two 🚨 Gemini corrections are most impactful: gemini_flash is 5× higher than bootstrapped estimate and gemini_pro_multimodal is 2.4× higher — Echoform, AIXIA, and any project routing bulk tasks or video verification through Gemini should audit budget estimates immediately. claude_opus pricing dropped 67% vs bootstrap (stale Opus 3 value); this is net-positive for swarm/QA workflows. One new entry (mistral_small) adds a cheap EU-residency multimodal path. No model deprecations this cycle.
+
+---
+
+## 2026-05-04 — 3 major updates, 2 new entries, 1 🚨 context reduction
+
+- **claude_opus:** release_date corrected 2026-01-01 → 2026-04-16 · claude-opus-4-7 confirmed launched April 16, 2026; SWE-bench Verified 80.8% → 87.6%, CursorBench 58% → 70%, vision resolution 3.3×. New tokenizer adds 1.0–1.35× token overhead vs Opus 4.6 — projects with tight token budgets should audit. Same $5/$25 pricing. Added "vision" capability flag.
+- **deepseek_general:** deepseek-v3.2 → deepseek-v4-flash · Released April 24, 2026. Context 128K → 1M. Pricing $0.28/$0.42 → $0.14/$0.28 (~50% across the board). Adds Thinking+Non-Thinking dual mode. Supports both OpenAI and Anthropic API formats.
+- 🚨 **grok:** grok-4.20-0309-v2 → grok-4.3 · Released/fully rolled out April 30, 2026. Pricing dropped $2.00/$6.00 → $1.25/$2.50 (positive). **Context window REDUCED 2M → 1M** — any AIXIA project using Grok for >1M-token calls must migrate to gemini_pro_multimodal. Adds native video frame input. Reasoning always active (no disable option).
+- **New family added:** deepseek_v4_pro · DeepSeek · 1.6T/49B-active params, 1M context, Thinking mode, $1.74/$3.48 standard. 🚨 75% promo ($0.435/$0.87) active through 2026-05-31 — standard rate resumes June 1; audit any project budgeted at promo rate before next crawl.
+- **New family added:** mistral_medium · Mistral · mistral-medium-3.5-2604; 128B dense open-weight; 256K context; $1.50/$7.50; released April 29, 2026. Unified reasoning+coding model filling EU mid-tier gap between mistral_small and mistral_large.
+- **gemini_pro_multimodal:** verified; noted Gemini 3.1 Flash TTS Preview and Veo 3.1 Lite Preview as new Google multimodal surface expansions (not tracked as separate families).
+- **openai_gpt:** verified; GPT-5.5 model page observed in OpenAI API docs — unconfirmed release, being conservative. Monitor next cycle.
+- **llama:** verified; no new releases. Llama 4 Behemoth still not generally available. "Avocado" next-gen codename reported but unconfirmed.
+- **No changes for:** claude_sonnet, claude_haiku, deepseek_reasoning, gemini_flash, openai_reasoning, mistral_large, mistral_small.
+
+**Summary:** Active cycle with two vendor-level version bumps (DeepSeek V4, Grok 4.3) and two new registry entries. The 🚨 Grok context window reduction from 2M→1M is the primary breakage risk — PropEdgeAI and VIMIΛ should confirm they have no Grok calls exceeding 1M tokens (if so, redirect to gemini_pro_multimodal). DeepSeek V4 Flash is a strict upgrade over V3.2 (cheaper AND larger context) with no migration friction. The DeepSeek V4 Pro promo cliff on June 1 (4× price jump) is the budget risk to watch — next crawl on May 18 will catch it before expiry. No model deprecations this cycle.
