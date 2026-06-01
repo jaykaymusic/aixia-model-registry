@@ -1,9 +1,9 @@
 {
   "_schema_version": 1,
   "_description": "Shared model registry for all AIXIA-workspace projects. Projects resolve model family → current_version at runtime from this file. Maintained by the bi-weekly model-release crawler (scheduled trigger). See ~/.claude/CLAUDE.md §9.5 for policy.",
-  "_last_updated": "2026-05-18",
-  "_last_crawler_run": "2026-05-18T09:00:00Z",
-  "_next_scheduled_run": "2026-06-01",
+  "_last_updated": "2026-06-01",
+  "_last_crawler_run": "2026-06-01T09:00:00Z",
+  "_next_scheduled_run": "2026-06-15",
   "_bootstrap_note": "This is the bootstrap state from 2026-04-20. Entries marked bootstrap_unverified: true are seeded from CLAUDE Code context and should be verified on the first crawler run. Pricing drifts; registry values are authoritative — always re-read at call-time.",
 
   "families": {
@@ -75,9 +75,9 @@
       "pricing_per_million_usd": { "input": 1.74, "output": 3.48 },
       "capabilities": ["reasoning", "thinking", "long_context", "tool_use"],
       "default_use": "high_performance_deepseek_with_thinking",
-      "last_verified": "2026-05-18",
+      "last_verified": "2026-06-01",
       "bootstrap_unverified": false,
-      "notes": "Verified May 18, 2026; no change. 75% promotional discount still active through 2026-05-31 (effective $0.435/$0.87 — 13 days remaining as of this crawl). 🚨 Promo expires June 1 — standard rate $1.74/$3.48 resumes; audit any project budget using this model at the promo rate. 1.6T total / 49B active params (large MoE), 1M context, Thinking+Non-Thinking dual mode. Compatible with OpenAI ChatCompletions and Anthropic API formats."
+      "notes": "🚨 75% PROMOTIONAL DISCOUNT EXPIRED June 1, 2026 — standard rate $1.74/$3.48 per million tokens now active. Projects budgeted at the promo rate ($0.435/$0.87) face a 4× cost increase effective immediately. Audit all AIXIA-workspace projects routing to this model. 1.6T total / 49B active params (large MoE), 1M context, Thinking+Non-Thinking dual mode. Compatible with OpenAI ChatCompletions and Anthropic API formats."
     },
     "gemini_pro_multimodal": {
       "vendor": "google",
