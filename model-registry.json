@@ -1,9 +1,9 @@
 {
   "_schema_version": 1,
   "_description": "Shared model registry for all AIXIA-workspace projects. Projects resolve model family → current_version at runtime from this file. Maintained by the bi-weekly model-release crawler (scheduled trigger). See ~/.claude/CLAUDE.md §9.5 for policy.",
-  "_last_updated": "2026-06-29",
-  "_last_crawler_run": "2026-06-29T09:00:00Z",
-  "_next_scheduled_run": "2026-07-13",
+  "_last_updated": "2026-07-13",
+  "_last_crawler_run": "2026-07-13T16:10:00Z",
+  "_next_scheduled_run": "2026-07-27",
   "_bootstrap_note": "This is the bootstrap state from 2026-04-20. Entries marked bootstrap_unverified: true are seeded from CLAUDE Code context and should be verified on the first crawler run. Pricing drifts; registry values are authoritative — always re-read at call-time.",
 
   "families": {
@@ -15,9 +15,9 @@
       "pricing_per_million_usd": { "input": 5.00, "output": 25.00 },
       "capabilities": ["reasoning", "tool_use", "long_context", "prompt_caching", "vision", "agentic_coding"],
       "default_use": "swarm_disputes_and_corpus_qa",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change from Jun 15. claude-opus-4-8 at $5/$25 per million remains current flagship and the recommended interim fallback while claude_fable (claude-fable-5) is SUSPENDED. UPDATED Jun 15, 2026: claude-opus-4-7 → claude-opus-4-8 (released May 28, 2026). Pricing unchanged at $5/$25 per million tokens. Fast Mode now 3× cheaper than 4.7 Fast Mode ($10/$50 per million). Key gains: SWE-Bench Pro 69.2% (vs 64.3% on 4.7), OSWorld-Verified 83.4%, ~35% fewer output tokens than 4.7 for equivalent tasks. Available on Claude API, Amazon Bedrock, Google Vertex AI, GitHub Copilot. New tokenizer note from 4.7 still applies: may use 1.0–1.35× more tokens than Opus 4.6 for the same input."
+      "notes": "Verified Jul 13, 2026; no change. claude-opus-4-8 at $5/$25 per million remains current flagship. SWE-Bench Pro 69.2%, OSWorld-Verified 83.4%. Fast Mode at $10/$50 per million. Available on Claude API, Amazon Bedrock, Google Vertex AI, GitHub Copilot."
     },
     "claude_fable": {
       "vendor": "anthropic",
@@ -27,23 +27,24 @@
       "pricing_per_million_usd": { "input": 10.00, "output": 50.00 },
       "capabilities": ["reasoning", "tool_use", "long_context", "prompt_caching", "vision", "agentic_coding", "safeguarded"],
       "default_use": "mythos_class_capability_with_safety_guardrails",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "api_suspended": true,
+      "api_suspended": false,
       "suspension_date": "2026-06-12",
-      "notes": "🚨 API FULLY SUSPENDED since June 12, 2026 — US government export-control directive citing national security. Anthropic enforced a global all-customer shutdown (technically could not filter by nationality in real-time across cloud platforms). Released June 9, suspended 3 days later after US government demonstrated a jailbreak technique; Anthropic disputes that a narrow jailbreak warrants recall of a commercial model at scale. AS OF JUNE 29: Fable 5 (general API) remains fully suspended; Mythos 5 partially restored for ~100 trusted US partner orgs only (cybersecurity/critical infrastructure, inc. Project Glasswing members: Apple, Google, Cisco, Nvidia, Microsoft). Axios (June 27) reports Trump administration expects broad restoration 'this week' — Pentagon and NSA sign-off is the remaining step; prior 'coming days' signals (June 15–16, June 21) have not produced a general restore. AIXIA PROJECTS: All calls to claude-fable-5 will fail until access is restored — route to claude_opus as interim Mythos-class fallback. Check https://www.anthropic.com/news for restoration updates. Original capability: software engineering, agentic coding, knowledge work, vision; $10/$50 per million; prompt caching $1/M cache hits; batch API $5/$25 per million; full 1M context at flat rate."
+      "suspension_lifted_date": "2026-07-01",
+      "notes": "🟢 API RESTORED July 1, 2026 (was suspended June 12–July 1, 19 days total). Restoration: US government export-control directive lifted after Anthropic added: (1) a new cybersecurity classifier blocking the reported jailbreak technique in >99% of cases and rerouting flagged requests to Claude Opus 4.8, (2) wider safety margin, (3) accepted government conditions, (4) HackerOne disclosure channel. Suspension backstory: Amazon researchers found a method that prompted Fable 5 to surface software vulnerabilities and produce exploit code; US Commerce Dept issued directive June 12 citing national security; Anthropic executed global shutdown (could not verify nationality in real-time). Access metering post-restoration: Pro/Max/Team/select Enterprise get up to 50% of weekly limits on usage credits. Anthropic extended included access through July 12, then again through July 19, 2026. Pricing unchanged: $10/$50 per million tokens; prompt caching $1/M cache hits; batch API $5/$25 per million; full 1M context at flat rate. AIXIA PROJECTS: calls to claude-fable-5 should succeed again — remove any interim routing to claude_opus for Fable workloads."
     },
     "claude_sonnet": {
       "vendor": "anthropic",
-      "current_version": "claude-sonnet-4-6",
-      "release_date": "2025-11-01",
-      "context_window": 200000,
-      "pricing_per_million_usd": { "input": 3.00, "output": 15.00 },
-      "capabilities": ["reasoning", "tool_use", "prompt_caching"],
+      "current_version": "claude-sonnet-5",
+      "release_date": "2026-06-30",
+      "context_window": 1000000,
+      "pricing_per_million_usd": { "input": 2.00, "output": 10.00 },
+      "capabilities": ["reasoning", "tool_use", "long_context", "prompt_caching", "vision", "agentic_coding"],
       "default_use": "user_facing_chat_and_chain_synthesis",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. claude-sonnet-4-6 at $3/$15 per million remains stable. No Sonnet 4.7/4.8 detected this cycle. Workhorse for user-facing chat and chain synthesis."
+      "notes": "UPDATED Jul 13, 2026: claude-sonnet-4-6 → claude-sonnet-5 (released June 30, 2026). Context window 200K → 1M tokens with no long-context pricing premium. Up to 128K output tokens. Described by Anthropic as the most agentic Sonnet yet; new default on Free and Pro plans. PRICING: $2/$10 per million (launch rate through August 31, 2026); standard rate reverts to $3/$15 from September 1, 2026. Set pricing to current launch rate; audit downstream cost models before September 1 if budgeted at launch rate. Model ID: claude-sonnet-5. Available on Claude API, Bedrock, Vertex AI."
     },
     "claude_haiku": {
       "vendor": "anthropic",
@@ -53,9 +54,9 @@
       "pricing_per_million_usd": { "input": 1.00, "output": 5.00 },
       "capabilities": ["classification", "fuzzy_match", "tool_use", "prompt_caching"],
       "default_use": "cross_lingual_parsing_and_fallback",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. Pricing and version stable at $1/$5 per million."
+      "notes": "Verified Jul 13, 2026; no change. Pricing and version stable at $1/$5 per million."
     },
     "deepseek_general": {
       "vendor": "deepseek",
@@ -65,9 +66,9 @@
       "pricing_per_million_usd": { "input": 0.14, "output": 0.28 },
       "capabilities": ["classification", "fuzzy_match", "multilingual_basic", "reasoning", "thinking", "long_context"],
       "default_use": "routine_llm_traffic",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. deepseek-v4-flash: 284B total / 13B active params (MoE), 1M context, Thinking+Non-Thinking dual mode. Cache hits at 1/10 standard rate. Compatible with OpenAI ChatCompletions and Anthropic API formats. Chinese-server jurisdiction — disclose in ToS. Router fallback: deepseek → claude_haiku → claude_sonnet. DeepSeek R2 remains unreleased as of this cycle."
+      "notes": "Verified Jul 13, 2026; no pricing or version change. DeepSeek V4 Flash officially GA as of mid-July 2026 (preview period ended). 284B total / 13B active params (MoE), 1M context, Thinking+Non-Thinking dual mode. Cache hits at 1/10 standard rate ($0.028/M). Compatible with OpenAI ChatCompletions and Anthropic API formats. Chinese-server jurisdiction — disclose in ToS. Router fallback: deepseek → claude_haiku → claude_sonnet."
     },
     "deepseek_reasoning": {
       "vendor": "deepseek",
@@ -77,9 +78,9 @@
       "pricing_per_million_usd": { "input": 0.55, "output": 2.19 },
       "capabilities": ["reasoning", "long_cot"],
       "default_use": "reasoning_when_opus_too_expensive",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). DeepSeek R2 not yet released. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks. Note: deepseek_v4_pro supports Thinking mode at 1M context if R1's 64K limit is too small."
+      "notes": "Verified Jul 13, 2026; no change. Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). DeepSeek R2 not released this cycle. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks. Note: deepseek_v4_pro supports Thinking mode at 1M context if R1's 64K limit is too small."
     },
     "deepseek_v4_pro": {
       "vendor": "deepseek",
@@ -89,9 +90,9 @@
       "pricing_per_million_usd": { "input": 0.435, "output": 0.87 },
       "capabilities": ["reasoning", "thinking", "long_context", "tool_use"],
       "default_use": "high_performance_deepseek_with_thinking",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "🚨 PRICING CORRECTION (Jun 29, 2026): The June 1, 2026 crawl INCORRECTLY recorded the promotional discount as expired and set pricing to $1.74/$3.48 standard rate. On May 22, 2026 — nine days BEFORE the May 31 expiry — DeepSeek announced the 75% discount is PERMANENT. Correct pricing is $0.435/$0.87 per million tokens (the 75%-off rate). The 4× price hike warned in the June 1 changelog did NOT occur. Projects that adjusted budgets upward to $1.74/$3.48 should revert immediately. Confirmed by DeepSeek API docs, Engadget, The Next Web, APIdog, and multiple pricing aggregators. Cache hits: $0.003625/M input. 1.6T total / 49B active params (large MoE), 1M context, Thinking+Non-Thinking dual mode."
+      "notes": "Verified Jul 13, 2026; pricing confirmed at $0.435/$0.87 per million tokens (permanent rate; 75% discount made permanent May 22, 2026). V4 Pro officially GA as of mid-July 2026 (preview period ended). NEW (Jul 2026): DeepSeek introduced time-of-day peak pricing for V4 — peak hours (09:00–12:00 and 14:00–18:00 China time) billed at 2× the off-peak rate; off-peak rate = $0.435/$0.87 (registry values). At peak hours effective rate is $0.87/$1.74 — projects with latency-insensitive workloads should queue requests during off-peak windows. Cache hits: $0.003625/M input. 1.6T total / 49B active params (large MoE), 1M context, Thinking+Non-Thinking dual mode."
     },
     "gemini_pro_multimodal": {
       "vendor": "google",
@@ -101,9 +102,9 @@
       "pricing_per_million_usd": { "input": 2.00, "output": 12.00 },
       "capabilities": ["multimodal", "vision", "audio", "video", "youtube_url_ingest"],
       "default_use": "audio_video_verification_and_youtube_analysis",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; version and pricing unchanged. WATCH: Gemini 3.5 Pro confirmed still in limited Vertex preview as of June 23, 2026 — GA slipped past Sundar Pichai's 'by end of June' target. Features: 2M token context, Deep Think reasoning mode, frontier multimodal. Pricing for 3.5 Pro not yet published. Do NOT update this entry until GA is confirmed. Deprecations completed: gemini-3.1-flash-image-preview and gemini-3-pro-image-preview shut down June 25, 2026 as flagged last cycle. Tiered pricing: $2/$12 up to 200K tokens; $4/$18 above 200K. Gemini Pro paid-only (free tier removed April 1, 2026). YouTube URL ingest via file_data.file_uri."
+      "notes": "Verified Jul 13, 2026; version and pricing unchanged. WATCH: Gemini 3.5 Pro targeting July 17, 2026 GA — missed June deadline (Sundar Pichai 'by end of June'), slipped to July. Currently in limited Vertex AI enterprise preview. Features: 2M token context, Deep Think reasoning mode, frontier multimodal. Pricing not yet published (estimates range widely; do not rely on third-party guesses). Do NOT update this entry until GA is confirmed. Tiered pricing for current 3.1 Pro: $2/$12 up to 200K tokens; $4/$18 above 200K. Gemini Pro paid-only (free tier removed April 1, 2026). YouTube URL ingest via file_data.file_uri."
     },
     "gemini_flash": {
       "vendor": "google",
@@ -113,21 +114,21 @@
       "pricing_per_million_usd": { "input": 1.50, "output": 9.00 },
       "capabilities": ["multimodal", "fast", "agentic_coding"],
       "default_use": "bulk_text_processing",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change from Jun 15. 🚨 PRICING TRIPLED Jun 15: gemini-3.1-flash → gemini-3.5-flash (GA May 19, 2026). $0.50→$1.50 input, $3.00→$9.00 output per million tokens (200% increase — well above 20% threshold). All AIXIA projects routing bulk text or coding tasks through gemini_flash must re-audit cost models. Context: 1,048,576 tokens. Cached input: $0.15/M (90% discount). Non-global regions: $1.65/$9.90. Batch API: 50% discount. Budget alternative: gemini-3.1-flash-lite still available at lower pricing."
+      "notes": "Verified Jul 13, 2026; no change. 🚨 PRICING TRIPLED Jun 15: gemini-3.1-flash → gemini-3.5-flash (GA May 19, 2026). $0.50→$1.50 input, $3.00→$9.00 output per million tokens (200% increase). All AIXIA projects routing bulk text or coding tasks through gemini_flash must re-audit cost models. Context: 1,048,576 tokens. Cached input: $0.15/M (90% discount). Non-global regions: $1.65/$9.90. Batch API: 50% discount. Budget alternative: gemini-3.1-flash-lite still available at lower pricing."
     },
     "openai_gpt": {
       "vendor": "openai",
-      "current_version": "gpt-5.5",
-      "release_date": "2026-04-23",
-      "context_window": 1000000,
+      "current_version": "gpt-5.6-sol",
+      "release_date": "2026-07-09",
+      "context_window": 1050000,
       "pricing_per_million_usd": { "input": 5.00, "output": 30.00 },
-      "capabilities": ["reasoning", "tool_use", "multimodal", "vision", "computer_use"],
+      "capabilities": ["reasoning", "tool_use", "multimodal", "vision", "computer_use", "multi_agent", "prompt_caching"],
       "default_use": "fallback_only",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; version and pricing unchanged. WATCH: GPT-5.6 Sol/Terra/Luna previewed June 26, 2026 in LIMITED PREVIEW only (~20 government-vetted orgs, OpenAI API and Codex only — NOT in ChatGPT). Pricing confirmed: Sol $5/$30 per million (1.5M context, max+ultra effort modes, parallel sub-model dispatch); Terra $2.50/$15 (GPT-5.5-competitive, 2× cheaper); Luna $1/$6 (fastest/cheapest). GA expected mid-July 2026 per Axios 'couple weeks' framing; no official date. current_version held at gpt-5.5 until GA. GPT-4.5 removed from ChatGPT June 26 (as flagged). GPT-5.5 Instant remains ChatGPT default. GPT-5.2 deprecated June 12. Fine-tuning API deprecated May 2026 — any AIXIA project on fine-tuned GPT must migrate. GPT-6 confirmed for 2026, no date. Not currently used by AIXIA projects."
+      "notes": "UPDATED Jul 13, 2026: gpt-5.5 → gpt-5.6-sol (GA July 9, 2026, after limited preview starting June 26). GPT-5.6 family launched with three tiers: Sol (flagship, gpt-5.6-sol, $5/$30, 1.05M context, max+ultra effort modes, parallel sub-model dispatch); Terra (gpt-5.6-terra, $2.50/$15, 1.05M context); Luna (gpt-5.6-luna, $1/$6, fastest/cheapest). Sol pricing unchanged from gpt-5.5 ($5/$30) but context bumped 1M→1.05M. Long-context surcharge: >272K input tokens billed at $10 input/$45 output for full request. Cache pricing: $0.50/M cache hits, $6.25/M cache writes, 30-minute minimum cache life (improvement over gpt-5.5). New: multi-agent mode (beta) lets Sol dispatch concurrent subagents in a single request. API model IDs: gpt-5.6-sol, gpt-5.6-terra, gpt-5.6-luna (gpt-5.6 aliases to Sol). Self-serve: no waitlist, no plan gating. GPT-5.5 Instant remains ChatGPT default. GPT-4.5 removed from ChatGPT June 26. Fine-tuning API deprecated — any AIXIA project on fine-tuned GPT must migrate. Not currently used by AIXIA projects."
     },
     "openai_reasoning": {
       "vendor": "openai",
@@ -137,9 +138,9 @@
       "pricing_per_million_usd": { "input": 1.10, "output": 4.40 },
       "capabilities": ["reasoning", "long_cot", "tool_use"],
       "default_use": "unused",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. o4-mini outperforms o3-mini at ~50% lower cost. o3 also available ($2.00/M input, 200K context). IMPORTANT: reasoning tokens billed at output rate — effective cost 5–20× listed rate. No o5 release confirmed this cycle. Not currently used by AIXIA projects."
+      "notes": "Verified Jul 13, 2026; no change. o4-mini outperforms o3-mini at ~50% lower cost. o3 also available ($2.00/M input, 200K context). IMPORTANT: reasoning tokens billed at output rate — effective cost 5–20× listed rate. No o5 release confirmed this cycle. Not currently used by AIXIA projects."
     },
     "mistral_large": {
       "vendor": "mistral",
@@ -149,9 +150,9 @@
       "pricing_per_million_usd": { "input": 0.50, "output": 1.50 },
       "capabilities": ["reasoning", "tool_use", "multilingual", "eu_data_residency"],
       "default_use": "eu_data_residency_fallback",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. Mistral Large 3 2512: 262K context, EU-hosted option for data-residency-sensitive tiers. No new Large model this cycle. Mistral released OCR 4 (document extraction, not a base LM) and new Les Ulis inference facility (Q3 2026 opening) — neither affects registry."
+      "notes": "Verified Jul 13, 2026; no change. Mistral Large 3 2512: 262K context, EU-hosted option for data-residency-sensitive tiers. No new Large model this cycle. Mistral released Leanstral 1.5 (Lean 4 formal proof engineering, retiring Sep 30 2026) and OCR 4 (mistral-ocr-4-0, $4/1K pages) this period — neither affects base LM routing."
     },
     "mistral_small": {
       "vendor": "mistral",
@@ -161,9 +162,9 @@
       "pricing_per_million_usd": { "input": 0.15, "output": 0.60 },
       "capabilities": ["reasoning", "multimodal", "vision", "tool_use", "eu_data_residency"],
       "default_use": "cheap_eu_multimodal_option",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. Mistral Small 4 (mistral-small-2603): MoE 119B total / 6B active params, 256K context, native multimodal. Cheapest EU-residency multimodal option at $0.15/$0.60."
+      "notes": "Verified Jul 13, 2026; no change. Mistral Small 4 (mistral-small-2603): MoE 119B total / 6B active params, 256K context, native multimodal. Cheapest EU-residency multimodal option at $0.15/$0.60."
     },
     "mistral_medium": {
       "vendor": "mistral",
@@ -173,9 +174,9 @@
       "pricing_per_million_usd": { "input": 1.50, "output": 7.50 },
       "capabilities": ["reasoning", "tool_use", "multilingual", "eu_data_residency"],
       "default_use": "mid_tier_eu_reasoning_and_coding",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. Mistral Medium 3.5 (April 29, 2026): dense 128B open-weight; unifies instruction-following, reasoning, and coding. 256K context, EU data residency. Output cost ($7.50/M) is 5× mistral_large — only worth it when unified reasoning+coding at long context is required."
+      "notes": "Verified Jul 13, 2026; no change. Mistral Medium 3.5 (April 29, 2026): dense 128B open-weight; unifies instruction-following, reasoning, and coding. 256K context, EU data residency. Output cost ($7.50/M) is 5× mistral_large — only worth it when unified reasoning+coding at long context is required."
     },
     "mistral_reasoning": {
       "vendor": "mistral",
@@ -185,9 +186,9 @@
       "pricing_per_million_usd": { "input": 2.00, "output": 5.00 },
       "capabilities": ["reasoning", "long_cot", "tool_use", "eu_data_residency"],
       "default_use": "eu_budget_reasoning",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no change. magistral-medium-2506: $2.00/$5.00 per million tokens, 41K context. Budget option: magistral-small-2506 at $0.50/$1.50, 40K context. EU data residency via La Plateforme. Compact context (41K) suits focused reasoning — switch to mistral_medium (256K) when long context is also needed."
+      "notes": "Verified Jul 13, 2026; no change. magistral-medium-2506: $2.00/$5.00 per million tokens, 41K context. Budget option: magistral-small-2506 at $0.50/$1.50, 40K context. EU data residency via La Plateforme. Compact context (41K) suits focused reasoning — switch to mistral_medium (256K) when long context is also needed."
     },
     "llama": {
       "vendor": "meta",
@@ -197,21 +198,21 @@
       "pricing_per_million_usd": { "input": 0.15, "output": 0.60 },
       "capabilities": ["open_weights", "multimodal", "vision", "tool_use"],
       "default_use": "self_hosted_option",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; no open-weight Llama release this cycle. Llama 4 Maverick remains current open-weight offering: 17B active params, 128 experts (400B total), 1M context, natively multimodal MoE. Pricing reflects third-party providers (Together AI, Fireworks, Groq, AWS Bedrock). Also: Llama 4 Scout ($0.15/$0.60, 10M context) for extreme-context tasks; Llama 4 Behemoth (288B active) still not GA. Meta Muse Spark (closed-source, June 2026) is NOT tracked here — not open-weight and not available via standard API routes relevant to AIXIA projects."
+      "notes": "Verified Jul 13, 2026; no new open-weight Llama release this cycle. Llama 4 Maverick remains current open-weight offering: 17B active params, 128 experts (400B total), 1M context, natively multimodal MoE. Pricing reflects third-party providers (Together AI, Fireworks, Groq, AWS Bedrock). Also: Llama 4 Scout ($0.15/$0.60, 10M context) for extreme-context tasks; Llama 4 Behemoth (288B active) still not GA. Meta focus has shifted toward Muse Spark (proprietary, not open-weight) — not tracked here as it is not available via standard open-weight routes relevant to AIXIA projects."
     },
     "grok": {
       "vendor": "xai",
-      "current_version": "grok-4.3",
-      "release_date": "2026-04-30",
-      "context_window": 1000000,
-      "pricing_per_million_usd": { "input": 1.25, "output": 2.50 },
-      "capabilities": ["reasoning", "tool_use", "multimodal", "vision", "video"],
+      "current_version": "grok-4.5",
+      "release_date": "2026-07-08",
+      "context_window": 500000,
+      "pricing_per_million_usd": { "input": 2.00, "output": 6.00 },
+      "capabilities": ["reasoning", "tool_use", "multimodal", "vision", "video", "agentic_coding"],
       "default_use": "reasoning_and_multimodal_alternative",
-      "last_verified": "2026-06-29",
+      "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
-      "notes": "Verified Jun 29, 2026; API version and pricing unchanged. grok-4.3 remains the current flagship API model at $1.25/$2.50 per million. V9-Medium (1.5T params, coding-focused, trained on Cursor workflows) launched in consumer Grok product June 16, 2026 but has NOT yet appeared in the xAI API — model string still absent from xAI API docs as of June 29; monitor docs.x.ai. NEW (API): Grok Build 0.1 — dedicated agentic coding model powering the Grok Build CLI — entered public beta via xAI API on May 29, 2026 at $1.00/$2.00 per million tokens; will add as separate registry entry when stable GA. Grok 5 (6T-param MoE, Colossus 2 cluster) still in training. Context window is 1M — projects needing >1M context must use gemini_pro_multimodal. Tiered pricing: requests exceeding 200K total tokens billed at higher rate. Voice STT/TTS APIs live since April 17, 2026."
+      "notes": "UPDATED Jul 13, 2026: grok-4.3 → grok-4.5 (released July 8, 2026). 🚨 TWO BREAKING CHANGES: (1) Context window HALVED: 1M → 500K tokens — any AIXIA project using Grok for context >500K must migrate to gemini_pro_multimodal (2M). (2) Output pricing +140%: $2.50 → $6.00/M output (well above 20% threshold); input +60%: $1.25 → $2.00/M. Architecture: built on V9 foundation (1.5T params), pitched as 'Opus-class but faster and more token-efficient.' Trained alongside Cursor on real coding-agent data — primary use case is engineering and agentic work. Configurable reasoning (low/medium/high), function calling, web search, X search, code execution, prompt caching supported. Available via xAI console (grok-4.5), Cursor (all plans), and Grok Build (default model). EU availability not confirmed as of launch. Knowledge cutoff: February 1, 2026. NOT yet available in EU. Previous grok-4.3 ($1.25/$2.50, 1M context) no longer the current version."
     }
   },
 
