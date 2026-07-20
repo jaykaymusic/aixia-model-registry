@@ -1,8 +1,9 @@
 {
   "_schema_version": 1,
   "_description": "Shared model registry for all AIXIA-workspace projects. Projects resolve model family → current_version at runtime from this file. Maintained by the bi-weekly model-release crawler (scheduled trigger). See ~/.claude/CLAUDE.md §9.5 for policy.",
-  "_last_updated": "2026-07-13",
+  "_last_updated": "2026-07-20",
   "_last_crawler_run": "2026-07-13T16:10:00Z",
+  "_last_manual_edit": "2026-07-20 — Out-of-band (non-crawler) addition of the `kimi` family (Moonshot AI, kimi-k3) at user request, to back the Hermes/AIXIA assistant, plus a new `agentic_assistant` routing default pointing at it. Verified via WebSearch (OpenRouter, VentureBeat, Tom's Hardware, MLQ) since Perplexity/Firecrawl remain network-blocked. JURISDICTION NOTE: Moonshot AI is China-hosted — deliberately EXCLUDED from privacy_mode_routing (Privacy Mode stays Claude-only). The next scheduled crawler run (2026-07-27) should re-verify this entry.",
   "_next_scheduled_run": "2026-07-27",
   "_bootstrap_note": "This is the bootstrap state from 2026-04-20. Entries marked bootstrap_unverified: true are seeded from CLAUDE Code context and should be verified on the first crawler run. Pricing drifts; registry values are authoritative — always re-read at call-time.",
 
@@ -213,11 +214,25 @@
       "last_verified": "2026-07-13",
       "bootstrap_unverified": false,
       "notes": "UPDATED Jul 13, 2026: grok-4.3 → grok-4.5 (released July 8, 2026). 🚨 TWO BREAKING CHANGES: (1) Context window HALVED: 1M → 500K tokens — any AIXIA project using Grok for context >500K must migrate to gemini_pro_multimodal (2M). (2) Output pricing +140%: $2.50 → $6.00/M output (well above 20% threshold); input +60%: $1.25 → $2.00/M. Architecture: built on V9 foundation (1.5T params), pitched as 'Opus-class but faster and more token-efficient.' Trained alongside Cursor on real coding-agent data — primary use case is engineering and agentic work. Configurable reasoning (low/medium/high), function calling, web search, X search, code execution, prompt caching supported. Available via xAI console (grok-4.5), Cursor (all plans), and Grok Build (default model). EU availability not confirmed as of launch. Knowledge cutoff: February 1, 2026. NOT yet available in EU. Previous grok-4.3 ($1.25/$2.50, 1M context) no longer the current version."
+    },
+    "kimi": {
+      "vendor": "moonshot",
+      "current_version": "kimi-k3",
+      "release_date": "2026-07-16",
+      "context_window": 1048576,
+      "pricing_per_million_usd": { "input": 3.00, "output": 15.00 },
+      "capabilities": ["reasoning", "tool_use", "long_context", "multimodal", "vision", "agentic_coding", "open_weights"],
+      "default_use": "agentic_assistant_and_frontend_coding",
+      "last_verified": "2026-07-20",
+      "bootstrap_unverified": false,
+      "jurisdiction": "china",
+      "notes": "ADDED Jul 20, 2026 (manual, out-of-band — not a crawler run). Moonshot AI Kimi K3, API GA July 16, 2026 at https://api.moonshot.ai/v1, model ID kimi-k3. 2.8T total params open-weight MoE (16 of 896 experts active per request), 1,048,576-token context, multimodal reasoning. Pricing $3/$15 per million input/output; cache-hit input $0.30/M; built-in web search billed +$0.015/call. Open weights slated for release ~July 27, 2026 under a Modified MIT license (self-hosting possible once out). Benchmarks: reported to edge out Claude Fable 5 in Frontend Code Arena (Tom's Hardware) — positioned as a frontier agentic/coding model, which is why it backs the Hermes/AIXIA autonomous assistant. Promo: up to 30% API-credit voucher rebate on top-ups ≥$1,000 through Aug 12, 2026. 🚨 JURISDICTION: Moonshot AI is China-hosted — treat like deepseek (disclose in ToS; do NOT use for data-residency-sensitive or Privacy Mode workloads). Deliberately EXCLUDED from privacy_mode_routing. Verified via WebSearch (OpenRouter, VentureBeat, MLQ, Tom's Hardware); re-verify at next crawler run (2026-07-27)."
     }
   },
 
   "routing_defaults": {
     "description": "Canonical default routing for common task categories. Projects override as needed in their local CLAUDE.md.",
+    "agentic_assistant": "kimi",
     "classification_and_fuzzy_match": "deepseek_general",
     "cross_lingual_parsing": "claude_haiku",
     "user_facing_chat": "claude_sonnet",
