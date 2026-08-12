@@ -96,15 +96,15 @@
     },
     "gemini_pro_multimodal": {
       "vendor": "google",
-      "current_version": "gemini-3.1-pro",
+      "current_version": "gemini-3.1-pro-preview",
       "release_date": "2026-02-19",
       "context_window": 2000000,
       "pricing_per_million_usd": { "input": 2.00, "output": 12.00 },
       "capabilities": ["multimodal", "vision", "audio", "video", "youtube_url_ingest"],
       "default_use": "audio_video_verification_and_youtube_analysis",
-      "last_verified": "2026-08-10",
+      "last_verified": "2026-08-12",
       "bootstrap_unverified": false,
-      "notes": "Verified Aug 10, 2026; version and pricing unchanged. ⚠️ Gemini 3.5 Pro STILL NOT GA — slipped past the 'end of June' target, the July 17 target, and as of early August 2026 remains listed as 'coming soon' on the Gemini API model page with no new date announced. The Gemini API model list has no gemini-3.5-pro entry in Stable or Preview; the newest callable Pro remains gemini-3.1-pro-preview. Rumored: 2.1M context, Deep Think reasoning mode, ~$15/$60 per million tokens (unconfirmed). Do NOT update this entry until Google publishes an official model card. CURRENT: Gemini 3.1 Pro at $2/$12 up to 200K tokens; $4/$18 above 200K. Paid-only (free tier removed April 1, 2026). YouTube URL ingest via file_data.file_uri. NOTE: With Gemini 3.6 Flash now available (see gemini_flash), consider routing non-pro multimodal tasks there at lower cost."
+      "notes": "FIXED Aug 12, 2026: current_version was 'gemini-3.1-pro', which Google's API returns HTTP 404 for — that id does not exist. Corrected to 'gemini-3.1-pro-preview', confirmed live via ListModels against a real key (36 models returned, no bare 'gemini-3.1-pro' among them). This entry's own prior notes already said 'the newest callable Pro remains gemini-3.1-pro-preview' — the current_version field just never matched that. Every project resolving this family was 404ing until now. Verified Aug 10, 2026 notes retained below for context. ⚠️ Gemini 3.5 Pro STILL NOT GA — slipped past the 'end of June' target, the July 17 target, and as of early August 2026 remains listed as 'coming soon' on the Gemini API model page with no new date announced. The Gemini API model list has no gemini-3.5-pro entry in Stable or Preview. Rumored: 2.1M context, Deep Think reasoning mode, ~$15/$60 per million tokens (unconfirmed). Do NOT update this entry until Google publishes an official model card. CURRENT: Gemini 3.1 Pro at $2/$12 up to 200K tokens; $4/$18 above 200K. Paid-only (free tier removed April 1, 2026). YouTube URL ingest via file_data.file_uri. NOTE: With Gemini 3.6 Flash now available (see gemini_flash), consider routing non-pro multimodal tasks there at lower cost."
     },
     "gemini_flash": {
       "vendor": "google",
