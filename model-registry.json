@@ -72,15 +72,15 @@
     },
     "deepseek_reasoning": {
       "vendor": "deepseek",
-      "current_version": "deepseek-r1",
-      "release_date": "2025-01-20",
-      "context_window": 64000,
-      "pricing_per_million_usd": { "input": 0.55, "output": 2.19 },
-      "capabilities": ["reasoning", "long_cot"],
+      "current_version": "deepseek-v4-pro",
+      "release_date": "2026-04-24",
+      "context_window": 1000000,
+      "pricing_per_million_usd": { "input": 0.435, "output": 0.87 },
+      "capabilities": ["reasoning", "thinking", "long_context", "tool_use"],
       "default_use": "reasoning_when_opus_too_expensive",
       "last_verified": "2026-08-12",
       "bootstrap_unverified": false,
-      "notes": "\ud83d\udea8 BROKEN \u2014 VERIFIED Aug 12, 2026: `deepseek-r1` is NOT served by the DeepSeek API. Live /models returns exactly two ids: `deepseek-v4-flash` and `deepseek-v4-pro`. Any project resolving this family gets a model-not-found error. Deliberately NOT auto-remapped: `deepseek-v4-pro` is already the `deepseek_v4_pro` family, so pointing deepseek_reasoning at it would duplicate an existing entry. Owner decision required \u2014 remap or retire this family. Verified Aug 10, 2026; no change. Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). 🚨 PRICE HIKE WARNING (Aug 6, 2026): DeepSeek announced across-the-board API price increases 'in the near term' — no effective date or new rates published yet. Monitor DeepSeek API docs weekly for R1 rate changes. ⚠️ DEPRECATION (Jul 24, 2026): Legacy alias deepseek-reasoner retired — use deepseek-r1 directly. DeepSeek R2 not released this cycle. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks. Note: deepseek_v4_pro supports Thinking mode at 1M context if R1's 64K limit is too small."
+      "notes": "\ud83d\udd27 REMAPPED Aug 12, 2026: was `deepseek-r1`, which DeepSeek does not serve \u2014 live /models returns only `deepseek-v4-flash` and `deepseek-v4-pro`. Now points at `deepseek-v4-pro`. **context_window, pricing, release_date and capabilities were all remapped with it** \u2014 r1's values (64K ctx, $0.55/$2.19) were wrong for the new target (1M ctx, $0.435/$0.87), and a spend cap sized from stale registry pricing is exactly how the gemini flash-vs-pro 4x overrun happened the same day. NOT retired: `routing_defaults.reasoning_cost_sensitive` points at this family, so deleting it would break the registry's own routing, and a call-site census found ~157 files referencing it. The `deepseek_v4_pro` family is the duplicate now (0 call sites) \u2014 retire that one, not this one. Owner decision still open on which key survives long-term. \ud83d\udea8 BROKEN \u2014 VERIFIED Aug 12, 2026: `deepseek-r1` is NOT served by the DeepSeek API. Live /models returns exactly two ids: `deepseek-v4-flash` and `deepseek-v4-pro`. Any project resolving this family gets a model-not-found error. Deliberately NOT auto-remapped: `deepseek-v4-pro` is already the `deepseek_v4_pro` family, so pointing deepseek_reasoning at it would duplicate an existing entry. Owner decision required \u2014 remap or retire this family. Verified Aug 10, 2026; no change. Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). 🚨 PRICE HIKE WARNING (Aug 6, 2026): DeepSeek announced across-the-board API price increases 'in the near term' — no effective date or new rates published yet. Monitor DeepSeek API docs weekly for R1 rate changes. ⚠️ DEPRECATION (Jul 24, 2026): Legacy alias deepseek-reasoner retired — use deepseek-r1 directly. DeepSeek R2 not released this cycle. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks. Note: deepseek_v4_pro supports Thinking mode at 1M context if R1's 64K limit is too small."
     },
     "deepseek_v4_pro": {
       "vendor": "deepseek",
@@ -92,7 +92,7 @@
       "default_use": "high_performance_deepseek_with_thinking",
       "last_verified": "2026-08-10",
       "bootstrap_unverified": false,
-      "notes": "Verified Aug 10, 2026; no change. Pricing confirmed at $0.435/$0.87 per million tokens (off-peak; peak hours 2× rate). 🚨 PRICE HIKE WARNING (Aug 6, 2026): DeepSeek announced across-the-board API price increases 'in the near term' — no effective date or new rates published yet. V4 Pro is the more expensive DeepSeek tier and may see a proportionally larger impact. Monitor DeepSeek API docs weekly. GA since mid-July 2026. 1.6T total / 49B active params (large MoE), 1M context, Thinking+Non-Thinking dual mode. Cache hits: $0.003625/M input."
+      "notes": "\u26a0\ufe0f REDUNDANT as of Aug 12, 2026: `deepseek_reasoning` now resolves to this same id (`deepseek-v4-pro`) after its `deepseek-r1` target was found not to exist. This family has **0 call sites** anywhere under /Users/filthyjay/Developer; `deepseek_reasoning` has ~157 and is named in `routing_defaults`. If one of the two is retired it should be this one. Left in place pending owner decision \u2014 deleting registry entries is not the same class of change as correcting a wrong value. Verified Aug 10, 2026; no change. Pricing confirmed at $0.435/$0.87 per million tokens (off-peak; peak hours 2× rate). 🚨 PRICE HIKE WARNING (Aug 6, 2026): DeepSeek announced across-the-board API price increases 'in the near term' — no effective date or new rates published yet. V4 Pro is the more expensive DeepSeek tier and may see a proportionally larger impact. Monitor DeepSeek API docs weekly. GA since mid-July 2026. 1.6T total / 49B active params (large MoE), 1M context, Thinking+Non-Thinking dual mode. Cache hits: $0.003625/M input."
     },
     "gemini_pro_multimodal": {
       "vendor": "google",

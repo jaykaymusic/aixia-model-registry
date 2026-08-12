@@ -182,3 +182,47 @@ family correctly while the exact string in `current_version` is not callable —
 what happened twice here. Every future crawl should end with a live ListModels call per vendor and
 assert that each `current_version` appears in the returned list. That check costs nothing (ListModels
 is unbilled) and would have caught both of these on 2026-08-10.
+
+---
+
+## 2026-08-12 (b) — deepseek_reasoning remapped off a dead id; pricing corrected with it
+
+Follow-up to the same-day out-of-cycle correction. The `deepseek-r1` breakage flagged earlier is now
+closed, and a call-site census settled the remap-vs-retire question with evidence rather than taste.
+
+- 🔧 **deepseek_reasoning:** `deepseek-r1` → **`deepseek-v4-pro`**. DeepSeek's live `/models` serves
+  exactly two ids and `deepseek-r1` is not one of them.
+- 🚨 **`context_window`, `pricing_per_million_usd`, `release_date` and `capabilities` were remapped
+  along with the id** — 64K/$0.55/$2.19 were r1's numbers and are wrong for v4-pro (1M ctx,
+  $0.435/$0.87). Changing only `current_version` would have left every spend cap sized off this
+  family computing against a model that is no longer the target. That is the identical failure mode
+  as the gemini flash-vs-pro 4× overrun found the same day: the route moved, the numbers did not.
+- **Retire was not an option.** `routing_defaults.reasoning_cost_sensitive` points at this family, so
+  deleting it breaks the registry's own routing table, and ~157 files under `/Users/filthyjay/Developer`
+  reference the key.
+- **The redundancy runs the other way.** `deepseek_v4_pro` — same id, **0 call sites anywhere** — is
+  now the duplicate. Flagged in its `notes` as the one to retire if either goes. **Not deleted:**
+  removing registry entries is a different class of change from correcting a wrong value, and it is
+  the owner's call.
+
+### On the proposal to retire the 7 zero-call-site families — rejected, with evidence
+
+A census suggested retiring `mistral_large`, `mistral_small`, `mistral_medium`, `mistral_reasoning`,
+`llama`, `grok` and `deepseek_v4_pro` as unreachable dead weight, on the grounds that they have no
+call sites and no credentials exist for them. Re-running that census independently found the premise
+is not clean:
+
+- **`mistral_large` and `llama` do appear in shipped code** — `_airlock/aixia-r4/AIXIA-upstream/server.js`
+  carries `// §9.5: family mistral_large is UNKNOWN_BOOTSTRAP — env-fallback`, the same for `llama`,
+  plus a live `GROQ_LLAMA` env fallback and `llama-3.3-70b-versatile` / `meta-llama/Llama-3.3-70B-Instruct-Turbo`
+  model strings. Not registry resolution, but not absence either.
+- **The zero-count itself was partly a substring artifact.** A naive `llama` grep also matches the
+  Spanish word *llamadas* in `AIXIA-OUTBOUND/lib/demo-template.mjs`. Counts moved in both directions
+  depending on match strictness, which is reason enough not to delete on the strength of a count.
+- **Deleting buys nothing operationally.** A family nothing calls cannot break anything. The stated
+  benefit was raising ListModels-validator coverage from 59% to 100% — a metric argument, not a
+  safety one, and the entries carry pricing and context research that deletion would discard.
+
+**Better fix, proposed not applied:** add `unverified_no_credentials: true` to those entries so the
+validator skips them with a warning instead of failing, and so nothing routes to them blind. Additive,
+reversible, loses no research.
