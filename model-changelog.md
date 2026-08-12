@@ -146,3 +146,39 @@ Append-only change log for `model-registry.json`. Maintained by the bi-weekly mo
 - **Note:** Perplexity API (api.perplexity.ai) and Firecrawl (api.firecrawl.dev) remain blocked by remote execution environment network policy (403 from proxy). WebSearch built-in tool used as fallback — data sourced from Bloomberg, Axios, TechNode, Dataconomy, AIWeekly, kie.ai, BenchLM.ai, pricepertoken.com, costgoat.com, eesel.ai, codersera.com, and releasebot.io. 🚨 Network policy for this crawler should be reviewed to unblock Perplexity and Firecrawl APIs.
 
 **Summary:** Quiet cycle for versions — no model upgrades — but one major forward-looking threat: the 🚨 DeepSeek API price hike warning (August 6, 2026) is the dominant event. DeepSeek called the upcoming increase "significant" and announced it only 4 days before this crawl with no new rate card; all AIXIA projects using any DeepSeek model (deepseek_general for routine traffic, deepseek_reasoning for budget reasoning, deepseek_v4_pro for high-performance tasks) should begin building budget contingencies immediately. The other urgency is the Sonnet 5 billing cliff: every project cost model must be updated for the $3/$15 rate before September 1. Grok 4.6 is a legitimate watch item (blog-confirmed Aug 7 launch) but not yet in the API — will capture next cycle if xAI publishes pricing. Gemini 3.5 Pro remains vaporware for a fourth cycle. No breakages or deprecations this cycle.
+
+---
+
+## 2026-08-12 — 🚨 Out-of-cycle correction: 2 families were resolving to model ids that do not exist
+
+Not a scheduled crawl. Triggered by a live Gemini call from TempoCut returning HTTP 404 — the first
+time any project in the workspace actually reached a provider through this registry rather than
+through a mock. The registry had been serving a dead id since at least the 2026-08-10 crawl.
+
+- 🚨 **gemini_pro_multimodal:** `gemini-3.1-pro` → **`gemini-3.1-pro-preview`** · The old id does not
+  exist. Verified against the live `v1beta/models` ListModels endpoint (52 models returned): there is
+  no `gemini-3.1-pro`. Every project resolving this family was 404ing on every call. Note the entry's
+  own `notes` field had already named `gemini-3.1-pro-preview` as "the newest callable Pro" on
+  2026-08-10 while `current_version` stayed wrong — the crawl verified the prose and not the field
+  that code actually reads.
+- 🚨 **deepseek_reasoning:** `deepseek-r1` is **NOT served** by the DeepSeek API. Live `/models`
+  returns exactly two ids: `deepseek-v4-flash` and `deepseek-v4-pro`. Flagged in `notes`, **not
+  auto-remapped** — `deepseek-v4-pro` is already the `deepseek_v4_pro` family, so remapping would
+  duplicate an existing entry. Owner decision required: remap or retire.
+
+**Also verified live this pass (no change needed):** `gemini_flash` → `gemini-3.6-flash` PRESENT ·
+`openai_gpt` → `gpt-5.6-sol` PRESENT · `openai_reasoning` → `o4-mini` PRESENT · `deepseek_general` →
+`deepseek-v4-flash` PRESENT · `deepseek_v4_pro` → `deepseek-v4-pro` PRESENT. Anthropic families
+(`claude-opus-5`, `claude-sonnet-5`, `claude-fable-5`, `claude-haiku-4-5-20251001`) confirmed against
+current Claude Code model context.
+
+**NOT verified — no credentials on this machine:** `mistral_large`, `mistral_small`, `mistral_medium`,
+`mistral_reasoning`, `llama`, `grok`. Five of six families that could be checked were fine and two of
+the checkable ones were broken, so these should not be assumed good.
+
+**Process defect this exposes.** The bi-weekly crawler verifies against vendor *documentation and
+pricing pages*, never against the vendor's own `/models` endpoint. A doc page can describe a model
+family correctly while the exact string in `current_version` is not callable — which is precisely
+what happened twice here. Every future crawl should end with a live ListModels call per vendor and
+assert that each `current_version` appears in the returned list. That check costs nothing (ListModels
+is unbilled) and would have caught both of these on 2026-08-10.

@@ -1,7 +1,7 @@
 {
   "_schema_version": 1,
   "_description": "Shared model registry for all AIXIA-workspace projects. Projects resolve model family → current_version at runtime from this file. Maintained by the bi-weekly model-release crawler (scheduled trigger). See ~/.claude/CLAUDE.md §9.5 for policy.",
-  "_last_updated": "2026-08-10",
+  "_last_updated": "2026-08-12",
   "_last_crawler_run": "2026-08-10T09:00:00Z",
   "_next_scheduled_run": "2026-08-24",
   "_bootstrap_note": "This is the bootstrap state from 2026-04-20. Entries marked bootstrap_unverified: true are seeded from CLAUDE Code context and should be verified on the first crawler run. Pricing drifts; registry values are authoritative — always re-read at call-time.",
@@ -78,9 +78,9 @@
       "pricing_per_million_usd": { "input": 0.55, "output": 2.19 },
       "capabilities": ["reasoning", "long_cot"],
       "default_use": "reasoning_when_opus_too_expensive",
-      "last_verified": "2026-08-10",
+      "last_verified": "2026-08-12",
       "bootstrap_unverified": false,
-      "notes": "Verified Aug 10, 2026; no change. Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). 🚨 PRICE HIKE WARNING (Aug 6, 2026): DeepSeek announced across-the-board API price increases 'in the near term' — no effective date or new rates published yet. Monitor DeepSeek API docs weekly for R1 rate changes. ⚠️ DEPRECATION (Jul 24, 2026): Legacy alias deepseek-reasoner retired — use deepseek-r1 directly. DeepSeek R2 not released this cycle. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks. Note: deepseek_v4_pro supports Thinking mode at 1M context if R1's 64K limit is too small."
+      "notes": "\ud83d\udea8 BROKEN \u2014 VERIFIED Aug 12, 2026: `deepseek-r1` is NOT served by the DeepSeek API. Live /models returns exactly two ids: `deepseek-v4-flash` and `deepseek-v4-pro`. Any project resolving this family gets a model-not-found error. Deliberately NOT auto-remapped: `deepseek-v4-pro` is already the `deepseek_v4_pro` family, so pointing deepseek_reasoning at it would duplicate an existing entry. Owner decision required \u2014 remap or retire this family. Verified Aug 10, 2026; no change. Pricing confirmed $0.55/$2.19 (cache hits: $0.14/M input). 🚨 PRICE HIKE WARNING (Aug 6, 2026): DeepSeek announced across-the-board API price increases 'in the near term' — no effective date or new rates published yet. Monitor DeepSeek API docs weekly for R1 rate changes. ⚠️ DEPRECATION (Jul 24, 2026): Legacy alias deepseek-reasoner retired — use deepseek-r1 directly. DeepSeek R2 not released this cycle. R1 remains ~96% cheaper than OpenAI o1 for comparable tasks. Note: deepseek_v4_pro supports Thinking mode at 1M context if R1's 64K limit is too small."
     },
     "deepseek_v4_pro": {
       "vendor": "deepseek",
@@ -96,15 +96,15 @@
     },
     "gemini_pro_multimodal": {
       "vendor": "google",
-      "current_version": "gemini-3.1-pro",
+      "current_version": "gemini-3.1-pro-preview",
       "release_date": "2026-02-19",
       "context_window": 2000000,
       "pricing_per_million_usd": { "input": 2.00, "output": 12.00 },
       "capabilities": ["multimodal", "vision", "audio", "video", "youtube_url_ingest"],
       "default_use": "audio_video_verification_and_youtube_analysis",
-      "last_verified": "2026-08-10",
+      "last_verified": "2026-08-12",
       "bootstrap_unverified": false,
-      "notes": "Verified Aug 10, 2026; version and pricing unchanged. ⚠️ Gemini 3.5 Pro STILL NOT GA — slipped past the 'end of June' target, the July 17 target, and as of early August 2026 remains listed as 'coming soon' on the Gemini API model page with no new date announced. The Gemini API model list has no gemini-3.5-pro entry in Stable or Preview; the newest callable Pro remains gemini-3.1-pro-preview. Rumored: 2.1M context, Deep Think reasoning mode, ~$15/$60 per million tokens (unconfirmed). Do NOT update this entry until Google publishes an official model card. CURRENT: Gemini 3.1 Pro at $2/$12 up to 200K tokens; $4/$18 above 200K. Paid-only (free tier removed April 1, 2026). YouTube URL ingest via file_data.file_uri. NOTE: With Gemini 3.6 Flash now available (see gemini_flash), consider routing non-pro multimodal tasks there at lower cost."
+      "notes": "\ud83d\udea8 CORRECTED Aug 12, 2026: current_version was `gemini-3.1-pro`, which DOES NOT EXIST on the Gemini API \u2014 every call returned HTTP 404. Verified against the live ListModels endpoint (v1beta/models, 52 models returned): no `gemini-3.1-pro` entry exists; the callable id is `gemini-3.1-pro-preview`. This entry's own notes had named the correct id since Aug 10 while current_version stayed wrong, so every project resolving gemini_pro_multimodal was broken. Verified Aug 10, 2026; version and pricing unchanged. ⚠️ Gemini 3.5 Pro STILL NOT GA — slipped past the 'end of June' target, the July 17 target, and as of early August 2026 remains listed as 'coming soon' on the Gemini API model page with no new date announced. The Gemini API model list has no gemini-3.5-pro entry in Stable or Preview; the newest callable Pro remains gemini-3.1-pro-preview. Rumored: 2.1M context, Deep Think reasoning mode, ~$15/$60 per million tokens (unconfirmed). Do NOT update this entry until Google publishes an official model card. CURRENT: Gemini 3.1 Pro at $2/$12 up to 200K tokens; $4/$18 above 200K. Paid-only (free tier removed April 1, 2026). YouTube URL ingest via file_data.file_uri. NOTE: With Gemini 3.6 Flash now available (see gemini_flash), consider routing non-pro multimodal tasks there at lower cost."
     },
     "gemini_flash": {
       "vendor": "google",
